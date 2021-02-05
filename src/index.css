@@ -1,0 +1,14 @@
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background: linear-gradient(to left, #c07a1f 7%, #ac9c11d2 84%);
+}
+
+button {
+  cursor: pointer;
+}
+
+.hover-black:hover {
+  background-color: #000 !important;
+}
