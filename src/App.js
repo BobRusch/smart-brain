@@ -9,15 +9,14 @@ import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import Profile from "./components/Profile/Profile";
 import Modal from "./components/Modal/Modal";
-import { APIGet, APIPost, APIPut } from "./utilities/APIutilities";
-import { getSessionToken } from "./utilities/authUtilities";
+import { APIGet, APIPost } from "./utilities/APIutilities";
 import "./App.css";
 
 const particlesOptions = {
   //customize to your own liking
   particles: {
     number: {
-      value: 30,
+      value: 80,
       density: {
         enable: true,
         value_area: 800,
