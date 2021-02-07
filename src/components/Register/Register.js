@@ -1,4 +1,5 @@
 import React from "react";
+import { APIPost } from "../../utilities/APIutilities";
 
 class Register extends React.Component {
   constructor(props) {
@@ -10,16 +11,9 @@ class Register extends React.Component {
     };
   }
 
-  onNameChange = (event) => {
-    this.setState({ name: event.target.value });
-  };
-
-  onEmailChange = (event) => {
-    this.setState({ email: event.target.value });
-  };
-
-  onPasswordChange = (event) => {
-    this.setState({ password: event.target.value });
+  onFormChange = (event) => {
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   saveAuthTokenInSessions = (token) => {
@@ -27,14 +21,10 @@ class Register extends React.Component {
   };
 
   onSubmitRegistration = () => {
-    fetch("http://localhost:3000/register", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.email,
-        password: this.state.password,
-        name: this.state.name,
-      }),
+    APIPost("register", {
+      email: this.state.email,
+      password: this.state.password,
+      name: this.state.name,
     })
       .then((response) => response.json())
       .then((data) => {
@@ -63,7 +53,7 @@ class Register extends React.Component {
                   type='text'
                   name='name'
                   id='name'
-                  onChange={this.onNameChange}
+                  onChange={this.onFormChange}
                 />
               </div>
               <div className='mt3'>
@@ -73,9 +63,9 @@ class Register extends React.Component {
                 <input
                   className='pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100 hover-black'
                   type='email'
-                  name='email-address'
+                  name='email'
                   id='email-address'
-                  onChange={this.onEmailChange}
+                  onChange={this.onFormChange}
                 />
               </div>
               <div className='mv3'>
@@ -87,7 +77,7 @@ class Register extends React.Component {
                   type='password'
                   name='password'
                   id='password'
-                  onChange={this.onPasswordChange}
+                  onChange={this.onFormChange}
                 />
               </div>
             </fieldset>

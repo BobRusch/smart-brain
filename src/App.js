@@ -9,6 +9,8 @@ import ImageLinkForm from "./components/ImageLinkForm/ImageLinkForm";
 import Rank from "./components/Rank/Rank";
 import Profile from "./components/Profile/Profile";
 import Modal from "./components/Modal/Modal";
+import { APIGet, APIPost, APIPut } from "./utilities/APIutilities";
+import { getSessionToken } from "./utilities/authUtilities";
 import "./App.css";
 
 const particlesOptions = {
@@ -51,23 +53,11 @@ class App extends Component {
   componentDidMount() {
     const token = window.localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:3000/signin", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: token,
-        },
-      })
+      APIPost("signin")
         .then((response) => response.json())
         .then((data) => {
           if (data && data.id) {
-            fetch(`http://localhost:3000/profile/${data.id}`, {
-              method: "GET",
-              headers: {
-                "Content-Type": "application/json",
-                Authorization: token,
-              },
-            })
+            APIGet(`profile/${data.id}`)
               .then((response) => response.json())
               .then((user) => {
                 if (user && user.email) {
@@ -120,15 +110,8 @@ class App extends Component {
 
   onButtonSubmit = () => {
     this.setState({ imageUrl: this.state.input });
-    fetch("http://localhost:3000/imageurl", {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: window.localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        input: this.state.input,
-      }),
+    APIPost("imageurl", {
+      input: this.state.input,
     })
       .then((response) => response.json())
       .then((response) => {

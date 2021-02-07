@@ -1,4 +1,6 @@
 import React from "react";
+import { APIPost } from "../../utilities/APIutilities";
+import { saveAuthTokenInSessions } from "../../utilities/authUtilities";
 import "./Signin.css";
 
 class Signin extends React.Component {
@@ -18,23 +20,16 @@ class Signin extends React.Component {
     this.setState({ signInPassword: event.target.value });
   };
 
-  saveAuthTokenInSessions = (token) => {
-    window.localStorage.setItem("token", token);
-  };
-
   onSubmitSignIn = () => {
-    fetch("http://localhost:3000/signin", {
-      method: "post",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        email: this.state.signInEmail,
-        password: this.state.signInPassword,
-      }),
+    APIPost("signin", {
+      email: this.state.signInEmail,
+      password: this.state.signInPassword,
     })
       .then((response) => response.json())
       .then((data) => {
         if (data && data.success === "true") {
-          this.saveAuthTokenInSessions(data.token);
+          console.log(data);
+          saveAuthTokenInSessions(data.token);
           this.props.loadUser(data.user);
           this.props.onRouteChange("home");
         }

@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import { APIPost } from "../../utilities/APIutilities";
 import "./Profile.css";
 
 class Profile extends Component {
@@ -12,15 +13,8 @@ class Profile extends Component {
   }
 
   onProfileUpdate = (data) => {
-    fetch(`http://localhost:3000/profile/${this.props.user.id}`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: window.localStorage.getItem("token"),
-      },
-      body: JSON.stringify({
-        formInput: data,
-      }),
+    APIPost(`profile/${this.props.user.id}`, {
+      formInput: data,
     })
       .then((resp) => {
         if (resp.status === 200 || resp.status === 304) {
@@ -34,19 +28,8 @@ class Profile extends Component {
   };
 
   onFormChange = (event) => {
-    switch (event.target.name) {
-      case "user-name":
-        this.setState({ name: event.target.value });
-        break;
-      case "user-age":
-        this.setState({ age: parseInt(event.target.value) });
-        break;
-      case "user-pet":
-        this.setState({ pet: event.target.value });
-        break;
-      default:
-        return;
-    }
+    const { name, value } = event.target;
+    this.setState({ [name]: value });
   };
 
   render() {
@@ -74,7 +57,7 @@ class Profile extends Component {
             <input
               onChange={this.onFormChange}
               type='text'
-              name='user-name'
+              name='name'
               className='pa2 ba w-100'
               placeholder={name}></input>
             <label className='mt2 fw6' htmlFor='user-age'>
@@ -83,7 +66,7 @@ class Profile extends Component {
             <input
               onChange={this.onFormChange}
               type='text'
-              name='user-age'
+              name='age'
               className='pa2 ba w-100'
               placeholder={age}></input>
             <label className='mt2 fw6' htmlFor='user-pet'>
@@ -92,7 +75,7 @@ class Profile extends Component {
             <input
               onChange={this.onFormChange}
               type='text'
-              name='user-pet'
+              name='pet'
               className='pa2 ba w-100'
               placeholder={pet}></input>
             <div
