@@ -19,7 +19,6 @@ export const APIPost = (target, body = {}) => {
 
 export const APIfetch = (target, method, body = {}) => {
   const token = getSessionToken();
-
   let pkt = {
     method,
     headers: { "Content-Type": "application/json" },
@@ -36,8 +35,6 @@ export const APIfetch = (target, method, body = {}) => {
     };
   }
 
-  console.log(_.isEmpty(body), body, target);
-
   if (method !== API_GET && !_.isEmpty(body)) {
     pkt = {
       ...pkt,
@@ -46,8 +43,6 @@ export const APIfetch = (target, method, body = {}) => {
       }),
     };
   }
-
-  console.log(pkt);
 
   return fetch(`http://localhost:3000/${target}`, pkt);
 };

@@ -28,7 +28,6 @@ class Signin extends React.Component {
       .then((response) => response.json())
       .then((data) => {
         if (data && data.success === "true") {
-          console.log(data);
           saveAuthTokenInSessions(data.token);
           this.props.loadUser(data.user);
           this.props.onRouteChange("home");

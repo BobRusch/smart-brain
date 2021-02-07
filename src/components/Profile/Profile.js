@@ -18,10 +18,8 @@ class Profile extends Component {
     })
       .then((resp) => {
         if (resp.status === 200 || resp.status === 304) {
-          console.log(data);
           this.props.toggleModal();
           this.props.loadUser({ ...this.props.user, ...data });
-          console.log({ ...this.props.user, ...data });
         }
       })
       .catch(console.log);
@@ -35,7 +33,7 @@ class Profile extends Component {
   render() {
     const { toggleModal, user } = this.props;
     const { name, age, pet } = this.state;
-    console.log(user);
+
     return (
       <div className='profile-modal'>
         <article className='br3 ba b--black-10 mv4 w-100 w-50-m w-25-l mw6 shadow-5 center bg-white'>

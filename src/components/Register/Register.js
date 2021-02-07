@@ -28,7 +28,6 @@ class Register extends React.Component {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
         if (data.userId) {
           this.saveAuthTokenInSessions(data.token);
           this.props.loadUser(data.user);
